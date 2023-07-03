@@ -150,12 +150,13 @@ demo = gr.Blocks()
 
 with demo:
     gr.Markdown(
-        "# HuggingFace i18n made easy\n"
-        '<img style="float: right;" src="hfkr_logo.png" height="10em">'
+        '<img style="display: block; margin-left: auto; margin-right: auto; height: 10em;"'
+            ' src="file/hfkr_logo.png"/>\n\n'
+        '<h1 style="text-align: center;">HuggingFace i18n made easy</h1>'
     )
     with gr.Row():
         language_input = gr.Textbox(
-            default="Korean",
+            value="Korean",
             label=" / ".join([
                 "Target language", "langue cible",
                 "目标语", "Idioma Objetivo",
@@ -163,7 +164,7 @@ with demo:
             ])
         )
         filepath_input = gr.Textbox(
-            default="tasks/masked_language_modeling.md",
+            value="tasks/masked_language_modeling.md",
             label="File path of transformers document"
         )
     with gr.Tabs():
