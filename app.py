@@ -3,6 +3,7 @@ import requests
 import string
 import time
 import re
+import os
 
 import openai
 import gradio as gr
@@ -150,8 +151,8 @@ demo = gr.Blocks()
 outputs = gr.outputs.Textbox(label="Translation")
 with demo:
     gr.Markdown(
-        "# HuggingFace i18n \n"
-        "## made easy with this demo."
+        "# HuggingFace i18n made easy\n"
+        '<img style="float: right;" src="hfkr_logo.png" height="10em">'
     )
     with gr.Row():
         language_input = gr.inputs.Textbox(
