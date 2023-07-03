@@ -148,14 +148,13 @@ def translate_openai(language: str, filepath: str, api_key: str) -> list[str]:
 
 demo = gr.Blocks()
 
-outputs = gr.outputs.Textbox(label="Translation")
 with demo:
     gr.Markdown(
         "# HuggingFace i18n made easy\n"
         '<img style="float: right;" src="hfkr_logo.png" height="10em">'
     )
     with gr.Row():
-        language_input = gr.inputs.Textbox(
+        language_input = gr.Textbox(
             default="Korean",
             label=" / ".join([
                 "Target language", "langue cible",
@@ -163,7 +162,7 @@ with demo:
                 "도착어", "língua alvo"
             ])
         )
-        filepath_input = gr.inputs.Textbox(
+        filepath_input = gr.Textbox(
             default="tasks/masked_language_modeling.md",
             label="File path of transformers document"
         )
@@ -175,11 +174,11 @@ with demo:
             prompt_output = gr.Textbox(label="Full Prompt", lines=3).style(show_copy_button=True)
             # TODO: add check for segments, indicating whether user should add or remove new lines from their input. (gr.Row)
             gr.Markdown("2. After getting the complete translation, remove randomly inserted newlines on your favorite text editor and paste the result below.")
-            ui_translated_input = gr.inputs.Textbox(label="Cleaned ChatGPT initial translation")
+            ui_translated_input = gr.Textbox(label="Cleaned ChatGPT initial translation")
             fill_button = gr.Button("Fill in scaffold", variant="primary")
         with gr.TabItem("API (Not Implemented)"):
             with gr.Row():
-                api_key_input = gr.inputs.Textbox(label="Your OpenAI API Key")
+                api_key_input = gr.Textbox(label="Your OpenAI API Key")
                 api_call_button = gr.Button("Translate (Call API)", variant="primary")
     with gr.Row():
         content_output = gr.Textbox(label="Original content").style(show_copy_button=True)
