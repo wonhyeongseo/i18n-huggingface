@@ -82,6 +82,12 @@ def fill_scaffold(filepath: str, translated: str) -> list[str]:
         ''.join(translated[i*3:i*3+3])
         for i in range(len(translated) // 3)
     ]).split('\n\n')
+    if (newlines := scaffold.template.count('$hf_i18n_placeholder') - len(translated)):
+        return [
+            content,
+            f"Please {'recover' if newlines > 0 else 'remove'} "
+            f"{abs(newlines)} incorrectly inserted double newlines."
+        ]
     translated_doc = scaffold.safe_substitute({
         f"hf_i18n_placeholder{i}": text
         for i, text in enumerate(translated)
@@ -165,7 +171,7 @@ with demo:
             prompt_button = gr.Button("Show Full Prompt", variant="primary")
             # TODO: add with_prompt_checkbox so people can freely use other services such as DeepL or Papago.
             gr.Markdown("1. Copy with the button right-hand side and paste into [chat.openai.com](https://chat.openai.com).")
-            prompt_output = gr.Textbox(label="Full Prompt", lines=3, show_copy_button=True)
+            prompt_output = gr.Textbox(label="Full Prompt", lines=3).style(show_copy_button=True)
             # TODO: add check for segments, indicating whether user should add or remove new lines from their input. (gr.Row)
             gr.Markdown("2. After getting the complete translation, remove randomly inserted newlines on your favorite text editor and paste the result below.")
             ui_translated_input = gr.inputs.Textbox(label="Cleaned ChatGPT initial translation")
@@ -175,8 +181,8 @@ with demo:
                 api_key_input = gr.inputs.Textbox(label="Your OpenAI API Key")
                 api_call_button = gr.Button("Translate (Call API)", variant="primary")
     with gr.Row():
-        content_output = gr.Textbox(label="Original content", show_copy_button=True)
-        final_output = gr.Textbox(label="Draft for review", show_copy_button=True)
+        content_output = gr.Textbox(label="Original content").style(show_copy_button=True)
+        final_output = gr.Textbox(label="Draft for review").style(show_copy_button=True)
 
     prompt_button.click(get_full_prompt, inputs=[language_input, filepath_input], outputs=prompt_output)
     fill_button.click(fill_scaffold, inputs=[filepath_input, ui_translated_input], outputs=[content_output, final_output])
